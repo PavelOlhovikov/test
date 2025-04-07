@@ -1,0 +1,48 @@
+//
+// !!! WARNING !!! AUTO-GENERATED FILE!
+// PLEASE DO NOT MODIFY IT AND USE "platformio.ini":
+// https://docs.platformio.org/page/projectconf/section_env_build.html#build-flags
+//
+{
+    "configurations": [
+        {
+            "name": "PlatformIO",
+            "includePath": [
+                "C:/Users/yapav/Documents/PlatformIO/Projects/test_aerodyne/include",
+                "C:/Users/yapav/Documents/PlatformIO/Projects/test_aerodyne/src",
+                "C:/Users/yapav/.platformio/packages/framework-libopencm3",
+                "C:/Users/yapav/.platformio/packages/framework-libopencm3/include",
+                "C:/Users/yapav/Documents/PlatformIO/Projects/test_aerodyne/.pio/libdeps/rymcu_f407ve/Unity/src",
+                ""
+            ],
+            "browse": {
+                "limitSymbolsToIncludedHeaders": true,
+                "path": [
+                    "C:/Users/yapav/Documents/PlatformIO/Projects/test_aerodyne/include",
+                    "C:/Users/yapav/Documents/PlatformIO/Projects/test_aerodyne/src",
+                    "C:/Users/yapav/.platformio/packages/framework-libopencm3",
+                    "C:/Users/yapav/.platformio/packages/framework-libopencm3/include",
+                    "C:/Users/yapav/Documents/PlatformIO/Projects/test_aerodyne/.pio/libdeps/rymcu_f407ve/Unity/src",
+                    ""
+                ]
+            },
+            "defines": [
+                "PLATFORMIO=60118",
+                "STM32F407xx",
+                "ARDUINO_GENERIC_F407VETX",
+                "STM32F4",
+                "F_CPU=168000000L",
+                ""
+            ],
+            "compilerPath": "C:/Users/yapav/.platformio/packages/toolchain-gccarmnoneeabi/bin/arm-none-eabi-gcc.exe",
+            "compilerArgs": [
+                "-mthumb",
+                "-mcpu=cortex-m4",
+                "-mfloat-abi=hard",
+                "-mfpu=fpv4-sp-d16",
+                ""
+            ]
+        }
+    ],
+    "version": 4
+}
