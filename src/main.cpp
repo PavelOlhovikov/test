@@ -185,7 +185,7 @@ void CucleTestVoltage()
     //  1. Измерить выходное напряжение пином PA3, линия batt_voltage, если оно приблизительно равно напряжению акб прервать тест, включить пищалку на линии PB3
     volatile float voltage = 0;
 #if(VOLTAGE_DIVIDER)
-    if (voltage < '?'|| voltage > '?') // Измерить выходное напряжение пином PA3, линия batt_voltage, если оно приблизительно равно напряжению акб прервать тест
+    if (voltage > (2.66f - 0.1) || voltage < (2.66 + 0.1f)) // 24 * 0.111118(коэффициент делителя напряжения) = 2,666832 // Измерить выходное напряжение пином PA3, линия batt_voltage, если оно приблизительно равно напряжению акб прервать тест
     {
         stat_cucle = 2; 
         pio_set(BUZZER_PORT, BUZZER_PIN); // включить пищалку на линии PB3 /* BUZZER on */
@@ -199,11 +199,14 @@ void CucleTestVoltage()
         voltage = test_voltage();
     }
 #else
-    if (voltage < kVRef - 0.1 || voltage > kVRef + 0.1) // Измерить выходное напряжение пином PA3, линия batt_voltage, если оно приблизительно равно напряжению акб прервать тест
+    if (voltage > kVRef - 0.1 || voltage < kVRef + 0.1) // Измерить выходное напряжение пином PA3, линия batt_voltage, если оно приблизительно равно напряжению акб прервать тест
     {
         stat_cycle = 2;
         gpio_set(BUZZER_PORT, BUZZER_PIN); // включить пищалку на линии PB3 /* BUZZER on */
         time = systick_counter;
+#if(DEBUG)
+        gpio_toggle(LED_PORT, LED_PIN); /* LED on/off */
+#endif
     }
     else
     {
@@ -225,7 +228,7 @@ void OnBattVoltage()
         gpio_set(KEY_PORT, KEY3_PIN); // Открыть ключ (PC9)
 
 #if(VOLTAGE_DIVIDER) // проверить что  ключи открылись измерев линию batt_voltage
-        if (voltage < '?'|| voltage > '?') 
+if (voltage > (2.66f - 0.1) || voltage < (2.66 + 0.1f)) // 24В(напряжение на входе) * 0.111118(коэффициент делителя напряжения) = 2,666832 
         {
             stat_cucle = 3; 
             time = systick_counter;
@@ -234,7 +237,7 @@ void OnBattVoltage()
 #endif
         }
 #else
-        if (voltage < kVRef - 0.1f || voltage > kVRef + 0.1f)
+        if (voltage > kVRef - 0.1f && voltage < kVRef + 0.1f)
         {
             stat_cycle = 3;
             time = systick_counter;
@@ -273,13 +276,13 @@ int main(void)
     size_t cycle = 0;
     char uart_buf[64];
 
-    while (cycle < TestCycles) // Прогнать этот цикл 1000 раз, на кждом круге выводить сообщение в uart с температурой резистора предзаряда (PA7)
+    while (1) // Прогнать этот цикл 1000 раз, на кждом круге выводить сообщение в uart с температурой резистора предзаряда (PA7)
     {
         switch(stat_cycle)
         {
             case 0:
             {
-                UartPrint("Test complite...");
+                UartPrint("Test complite...\r\n");
                 MSleep(1000);
                 break;
             }
